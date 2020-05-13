@@ -27,15 +27,15 @@ public class MainController {
 
     private Stage thisStage;//当前controller的Stage
     private SmartGraphPanel<Vertex, Edge> graphView;
-    private Vertex[] vertices;
-    private Edge[] edges;
-    Graph<Vertex, Edge> g;
+    static Vertex[] vertices;
+    static Edge[] edges;
+    static Graph<Vertex, Edge> g;
 
     public static int level;
 
-    static int n = 10; //多边形边数
-    String[] op; //每条边的对应的操作（从1开始计数）
-    int[] v; //每个顶点数值（从1开始计数）
+    static int n = 5; //多边形边数
+    static String[] op; //每条边的对应的操作（从1开始计数）
+    static int[] v; //每个顶点数值（从1开始计数）
 
 
     //生成Stage时生成该Stage的Controller，Controller调用该方法把Stage传过来
@@ -88,7 +88,8 @@ public class MainController {
             else v[i] = -ran.nextInt(10);
         }
 
-        Graph<Vertex, Edge> g = build_flower_graph();
+//        Graph<Vertex, Edge> g = build_flower_graph();
+        g = build_flower_graph();
         //System.out.println(g);
 
         SmartPlacementStrategy strategy = new SmartCircularSortedPlacementStrategy();
