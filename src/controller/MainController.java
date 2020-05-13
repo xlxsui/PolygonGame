@@ -19,8 +19,6 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class MainController {
@@ -29,11 +27,13 @@ public class MainController {
 
     private Stage thisStage;//当前controller的Stage
     private SmartGraphPanel<Vertex, Edge> graphView;
-    public List<Vertex> vertexList = new ArrayList<>();
+    private Vertex[] vertices;
+    private Edge[] edges;
+    Graph<Vertex, Edge> g;
 
-    public List<Edge> edgeList = new ArrayList<>();
+    public static int level;
 
-    static int n = 5; //多边形边数
+    static int n = 10; //多边形边数
     String[] op; //每条边的对应的操作（从1开始计数）
     int[] v; //每个顶点数值（从1开始计数）
 
@@ -49,23 +49,25 @@ public class MainController {
 
     private Graph<Vertex, Edge> build_flower_graph() {
 
-        Graph<Vertex, Edge> g = new GraphEdgeList<>();
+        g = new GraphEdgeList<>();
 
+        vertices = new Vertex[n + 1];
         for (int i = 1; i <= n; i++) {
             Vertex vertex = new Vertex(i, v[i]);
-            vertexList.add(vertex);
+            vertices[i] = vertex;
             g.insertVertex(vertex);
         }
 
-        for (int i = 1; i <=n ; i++) {
+        edges = new Edge[n + 1];
+        for (int i = 1; i <= n; i++) {
             Edge edge = new Edge(i, op[i]);
-            edgeList.add(edge);
+            edges[i] = edge;
         }
 
-        g.insertEdge(vertexList.get(0), vertexList.get(n-1), edgeList.get(0));
-        for(int i=0; i<=n-2; i++){
-            g.insertEdge(vertexList.get(i), vertexList.get(i+1), edgeList.get(i+1));
+        for (int i = 1; i <= n - 1; i++) {
+            g.insertEdge(vertices[i], vertices[i + 1], edges[i + 1]);
         }
+        g.insertEdge(vertices[n], vertices[1], edges[1]);
 
 
         return g;
@@ -73,16 +75,16 @@ public class MainController {
 
     public void buildGraph() {
         //生成随机数据
-        String [] opp = {"+","*"};//运算符数组
+        String[] opp = {"+", "*"};//运算符数组
         Random ran = new Random();
         //生成随机运算符和顶点数值
-        op = new String[n+1];
-        v = new int[n+1];
-        for(int i=1; i<=n; i++){
+        op = new String[n + 1];
+        v = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
             int whichop = ran.nextInt(2);
             op[i] = opp[whichop];
             int addOr = ran.nextInt(2);
-            if(addOr == 0)v[i] = ran.nextInt(10);
+            if (addOr == 0) v[i] = ran.nextInt(10);
             else v[i] = -ran.nextInt(10);
         }
 
@@ -92,9 +94,10 @@ public class MainController {
         SmartPlacementStrategy strategy = new SmartCircularSortedPlacementStrategy();
         graphView = new SmartGraphPanel<>(g, strategy);
 
-        // 给点设置样式。。
+//         给点颜色看看
         if (g.numVertices() > 0) {
-            graphView.getStylableVertex(vertexList.get(0)).setStyle("-fx-fill: gold; -fx-stroke: brown;");
+            graphView.getStylableVertex(vertices[1]).setStyle("-fx-fill: gold; -fx-stroke: brown;");
+            graphView.getStylableVertex(vertices[2]).setStyle("-fx-fill: blue; -fx-stroke: brown;");
         }
 
         gridPane.add(graphView, 0, 0);
@@ -105,6 +108,17 @@ public class MainController {
     }
 
     public void onOptimumBtnClicked() throws IOException {
+//        if (g.numEdges() > 0) {
+//            g.removeEdge((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges().toArray()[0]);
+//        }
+//        Vertex vertex = new Vertex(3, 45);
+//        vertices[vertices.length - 1] = vertex;
+//        g.insertVertex(vertex);
+//
+//        g.insertEdge(vertices[vertices.length - 1], vertices[vertices.length - 2], new Edge(3, "*"));
+//
+//        graphView.update();
+
         //动态加载窗口fxml界面
         Stage stage = new Stage();
         //getResource是定位到当前类目录，..jar返回不了，注意大小写。/开头定位到根目录，相当于src

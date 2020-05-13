@@ -9,6 +9,10 @@ public class Edge {
         this.operation = operation;
     }
 
+    public Edge(int key) {
+        this.key = key;
+    }
+
     @Override
     public String toString() {
         return operation;
