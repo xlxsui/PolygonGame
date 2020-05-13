@@ -5,6 +5,8 @@ import com.brunomnsilva.smartgraph.graph.GraphEdgeList;
 import com.brunomnsilva.smartgraph.graphview.SmartCircularSortedPlacementStrategy;
 import com.brunomnsilva.smartgraph.graphview.SmartGraphPanel;
 import com.brunomnsilva.smartgraph.graphview.SmartPlacementStrategy;
+import entity.Edge;
+import entity.Vertex;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -17,73 +19,62 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainController {
     @FXML
     GridPane gridPane;
 
     private Stage thisStage;//当前controller的Stage
-    private SmartGraphPanel<String, String> graphView;
+    private SmartGraphPanel<Vertex, Edge> graphView;
+    public List<Vertex> vertexList = new ArrayList<>();
+
+    public List<Edge> edgeList = new ArrayList<>();
+
 
     //生成Stage时生成该Stage的Controller，Controller调用该方法把Stage传过来
     public void setStage(Stage stage) {
         thisStage = stage;
     }
 
-    public void exitBtnClicked(){
+    public void exitBtnClicked() {
         thisStage.close();
     }
 
-    private Graph<String, String> build_flower_graph() {
+    private Graph<Vertex, Edge> build_flower_graph() {
 
-        Graph<String, String> g = new GraphEdgeList<>();
+        Graph<Vertex, Edge> g = new GraphEdgeList<>();
 
-        g.insertVertex("A");
-        g.insertVertex("B");
-        g.insertVertex("C");
-        g.insertVertex("D");
-        g.insertVertex("E");
-        g.insertVertex("F");
-        g.insertVertex("G");
+        for (int i = 0; i < 3; i++) {
+            Vertex vertex = new Vertex(i, (int) (100 - Math.random() * 200));
+            vertexList.add(vertex);
+            g.insertVertex(vertex);
+        }
 
-        g.insertEdge("A", "B", "1");
-        g.insertEdge("A", "C", "2");
-        g.insertEdge("A", "D", "3");
-        g.insertEdge("A", "E", "4");
-        g.insertEdge("A", "F", "5");
-        g.insertEdge("A", "G", "6");
+        for (int i = 0; i < 3; i++) {
+            double random = Math.random();
+            Edge edge = new Edge(i, random > 0.5 ? "*" : "+");
+            edgeList.add(edge);
+        }
 
-        g.insertVertex("H");
-        g.insertVertex("I");
-        g.insertVertex("J");
-        g.insertVertex("K");
-        g.insertVertex("L");
-        g.insertVertex("M");
-        g.insertVertex("N");
-
-        g.insertEdge("H", "I", "7");
-        g.insertEdge("H", "J", "8");
-        g.insertEdge("H", "K", "9");
-        g.insertEdge("H", "L", "10");
-        g.insertEdge("H", "M", "11");
-        g.insertEdge("H", "N", "12");
-
-        g.insertEdge("A", "H", "0");
-
-        //g.insertVertex("ISOLATED");
+        g.insertEdge(vertexList.get(0), vertexList.get(2), edgeList.get(0));
+        g.insertEdge(vertexList.get(0), vertexList.get(1), edgeList.get(1));
+        g.insertEdge(vertexList.get(1), vertexList.get(2), edgeList.get(2));
 
         return g;
     }
 
     public void buildGraph() {
-        Graph<String, String> g = build_flower_graph();
+        Graph<Vertex, Edge> g = build_flower_graph();
         System.out.println(g);
 
         SmartPlacementStrategy strategy = new SmartCircularSortedPlacementStrategy();
         graphView = new SmartGraphPanel<>(g, strategy);
 
+        // 给点设置样式。。
         if (g.numVertices() > 0) {
-            graphView.getStylableVertex("A").setStyle("-fx-fill: gold; -fx-stroke: brown;");
+            graphView.getStylableVertex(vertexList.get(0)).setStyle("-fx-fill: gold; -fx-stroke: brown;");
         }
 
         gridPane.add(graphView, 0, 0);
@@ -119,3 +110,4 @@ public class MainController {
         controller.initGraph();
     }
 }
+

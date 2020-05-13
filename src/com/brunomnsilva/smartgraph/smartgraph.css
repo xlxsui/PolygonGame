@@ -10,7 +10,7 @@
 }
 
 .vertex-label {
-    -fx-font: bold 8pt "sans-serif";
+    -fx-font: bold 12pt "sans-serif";
 }
 
 .edge {
@@ -23,7 +23,7 @@
 }
 
 .edge-label {
-    -fx-font: normal 5pt "sans-serif";
+    -fx-font: normal 24pt "sans-serif";
 }
 
 .arrow {

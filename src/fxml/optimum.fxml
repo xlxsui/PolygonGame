@@ -20,11 +20,13 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
                 <Button mnemonicParsing="false" text="暂停" GridPane.rowIndex="0" />
                 <Button mnemonicParsing="false" text="上一步" GridPane.rowIndex="1" />
-                <Button mnemonicParsing="false" text="退出" GridPane.rowIndex="2" onMouseClicked="#exitBtnClicked"/>
+                <Button mnemonicParsing="false" text="下一步" GridPane.rowIndex="2" />
+                <Button mnemonicParsing="false" text="退出" GridPane.rowIndex="3" onMouseClicked="#exitBtnClicked"/>
             </children>
         </GridPane>
     </children>
