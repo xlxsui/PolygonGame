@@ -1,5 +1,6 @@
 package controller;
 
+import com.brunomnsilva.smartgraph.graph.DigraphEdgeList;
 import com.brunomnsilva.smartgraph.graph.Graph;
 import com.brunomnsilva.smartgraph.graph.GraphEdgeList;
 import com.brunomnsilva.smartgraph.graphview.SmartCircularSortedPlacementStrategy;
@@ -20,6 +21,7 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
+import java.util.Stack;
 
 public class MainController {
     @FXML
@@ -144,5 +146,6 @@ public class MainController {
         stage.show();
         controller.initGraph();
     }
+
 }
 
