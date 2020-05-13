@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MainController {
     @FXML
@@ -31,6 +32,10 @@ public class MainController {
     public List<Vertex> vertexList = new ArrayList<>();
 
     public List<Edge> edgeList = new ArrayList<>();
+
+    static int n = 5; //多边形边数
+    String[] op; //每条边的对应的操作（从1开始计数）
+    int[] v; //每个顶点数值（从1开始计数）
 
 
     //生成Stage时生成该Stage的Controller，Controller调用该方法把Stage传过来
@@ -46,28 +51,43 @@ public class MainController {
 
         Graph<Vertex, Edge> g = new GraphEdgeList<>();
 
-        for (int i = 0; i < 3; i++) {
-            Vertex vertex = new Vertex(i, (int) (100 - Math.random() * 200));
+        for (int i = 1; i <= n; i++) {
+            Vertex vertex = new Vertex(i, v[i]);
             vertexList.add(vertex);
             g.insertVertex(vertex);
         }
 
-        for (int i = 0; i < 3; i++) {
-            double random = Math.random();
-            Edge edge = new Edge(i, random > 0.5 ? "*" : "+");
+        for (int i = 1; i <=n ; i++) {
+            Edge edge = new Edge(i, op[i]);
             edgeList.add(edge);
         }
 
-        g.insertEdge(vertexList.get(0), vertexList.get(2), edgeList.get(0));
-        g.insertEdge(vertexList.get(0), vertexList.get(1), edgeList.get(1));
-        g.insertEdge(vertexList.get(1), vertexList.get(2), edgeList.get(2));
+        g.insertEdge(vertexList.get(0), vertexList.get(n-1), edgeList.get(0));
+        for(int i=0; i<=n-2; i++){
+            g.insertEdge(vertexList.get(i), vertexList.get(i+1), edgeList.get(i+1));
+        }
+
 
         return g;
     }
 
     public void buildGraph() {
+        //生成随机数据
+        String [] opp = {"+","*"};//运算符数组
+        Random ran = new Random();
+        //生成随机运算符和顶点数值
+        op = new String[n+1];
+        v = new int[n+1];
+        for(int i=1; i<=n; i++){
+            int whichop = ran.nextInt(2);
+            op[i] = opp[whichop];
+            int addOr = ran.nextInt(2);
+            if(addOr == 0)v[i] = ran.nextInt(10);
+            else v[i] = -ran.nextInt(10);
+        }
+
         Graph<Vertex, Edge> g = build_flower_graph();
-        System.out.println(g);
+        //System.out.println(g);
 
         SmartPlacementStrategy strategy = new SmartCircularSortedPlacementStrategy();
         graphView = new SmartGraphPanel<>(g, strategy);

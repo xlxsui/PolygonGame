@@ -23,7 +23,7 @@ public class UtilitiesJavaFX {
      * @return          topmost node containing (sceneX, sceneY) point
      */
     public static Node pick(Node node, double sceneX, double sceneY) {
-        Point2D p = node.sceneToLocal(sceneX, sceneY, true /* rootScene */);
+        Point2D p = node.sceneToLocal(sceneX, sceneY/* rootScene */);
 
         // check if the given node has the point inside it, or else we drop out
         if (!node.contains(p)) {
@@ -42,7 +42,7 @@ public class UtilitiesJavaFX {
             List<Node> children = ((Parent) node).getChildrenUnmodifiable();
             for (int i = children.size() - 1; i >= 0; i--) {
                 Node child = children.get(i);
-                p = child.sceneToLocal(sceneX, sceneY, true /* rootScene */);
+                p = child.sceneToLocal(sceneX, sceneY/* rootScene */);
                 if (child.isVisible() && !child.isMouseTransparent() && child.contains(p)) {
                     bestMatchingChild = child;
                     break;
