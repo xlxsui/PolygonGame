@@ -126,6 +126,12 @@ public class DigraphEdgeList<V, E> implements Digraph<V, E> {
         return edges.size();
     }
 
+
+    @Override
+    public Collection<Vertex<V>> vertices(int time) {
+        return null;
+    }
+
     @Override
     public synchronized Collection<Vertex<V>> vertices() {
         List<Vertex<V>> list = new ArrayList<>();
@@ -133,6 +139,11 @@ public class DigraphEdgeList<V, E> implements Digraph<V, E> {
             list.add(v);
         });
         return list;
+    }
+
+    @Override
+    public Collection<Edge<E, V>> edges(int time) {
+        return null;
     }
 
     @Override

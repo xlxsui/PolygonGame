@@ -58,7 +58,9 @@ public interface Graph<V, E> {
      * 
      * @return      collection of vertices
      */
+    public Collection<Vertex<V>> vertices(int time);
     public Collection<Vertex<V>> vertices();
+
 
     /**
      * Returns the edges of the graph as a collection.
@@ -67,6 +69,7 @@ public interface Graph<V, E> {
      * 
      * @return      collection of edges
      */
+    public Collection<Edge<E, V>> edges(int time);
     public Collection<Edge<E, V>> edges();
 
     /**

@@ -15,7 +15,7 @@
 
 .edge {
     -fx-stroke-width: 2;
-    -fx-stroke: #FF6D66;
+    -fx-stroke: #000;
     -fx-stroke-dash-array: 2 5 2 5; /* remove for clean edges */
     -fx-fill: transparent; /*important for curved edges. do not remove */
     -fx-stroke-line-cap: round;

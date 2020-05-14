@@ -23,11 +23,9 @@
  */
 package com.brunomnsilva.smartgraph.graph;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import controller.MainController;
+
+import java.util.*;
 
 /**
  * ADT Graph implementation that stores a collection of edges (and vertices) and
@@ -47,13 +45,18 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
     private Map<V, Vertex<V>> vertices;
     private Map<E, Edge<E, V>> edges;
 
+    private List<Vertex<V>> vlist;
+    private List<Edge<E, V>> elist;
+
+
     /**
      * Creates a empty graph.
      */
     public GraphEdgeList() {
-        this.vertices = new HashMap<>();
-        this.edges = new HashMap<>();
+        this.vertices = new LinkedHashMap<>();
+        this.edges = new LinkedHashMap<>();
     }
+
 
     @Override
     public int numVertices() {
@@ -66,8 +69,21 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
     }
 
     @Override
+    public Collection<Vertex<V>> vertices(int time) {
+        if(time==1){
+            vlist = new ArrayList<>();
+            for (Vertex<V> v : vertices.values()) {
+                vlist.add(new MyVertex(v.element()));
+            }
+            return vlist;
+        }
+        else
+            return vlist;
+    }
+
+    @Override
     public Collection<Vertex<V>> vertices() {
-        List<Vertex<V>> list = new ArrayList<>();
+        ArrayList<Vertex<V>> list = new ArrayList<>();
         for (Vertex<V> v : vertices.values()) {
             list.add(v);
         }
@@ -75,8 +91,25 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
     }
 
     @Override
+    public Collection<Edge<E, V>> edges(int time) {
+        if(time==0){
+            elist = new ArrayList<>();
+            for (Edge<E, V> e : edges.values()) {
+                //elist.add(e);
+                elist.add(new MyEdge(e.element(),e.vertices()[0],e.vertices()[1]));
+
+            }
+            return elist;
+        }
+        else{
+            return elist;
+        }
+
+    }
+
+    @Override
     public Collection<Edge<E, V>> edges() {
-        List<Edge<E, V>> list = new ArrayList<>();
+        ArrayList<Edge<E,V>> list = new ArrayList<>();
         for (Edge<E, V> e : edges.values()) {
             list.add(e);
         }

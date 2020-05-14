@@ -35,7 +35,7 @@ public class MainController {
 
     public static int level;
 
-    static int n = 5; //多边形边数
+    public static int n = 5; //多边形边数
     static String[] op; //每条边的对应的操作（从1开始计数）
     static int[] v; //每个顶点数值（从1开始计数）
 
@@ -66,11 +66,10 @@ public class MainController {
             edges[i] = edge;
         }
 
+        g.insertEdge(vertices[n], vertices[1], edges[1]);
         for (int i = 1; i <= n - 1; i++) {
             g.insertEdge(vertices[i], vertices[i + 1], edges[i + 1]);
         }
-        g.insertEdge(vertices[n], vertices[1], edges[1]);
-
 
         return g;
     }

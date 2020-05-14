@@ -111,7 +111,7 @@ public class DP {
         int s, r;
         if (j == 1) return; //链中只有一个顶点，直接返回
         if (j == 2) {
-            r = i + 1;//两个顶点之间的边
+            r = i % n + 1;//两个顶点之间的边
             this.s.push(r);
             return; //只有两个顶点时，没有子链，无须递归
         }
