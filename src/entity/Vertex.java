@@ -2,7 +2,7 @@ package entity;
 
 public class Vertex {
     int key;
-    int value;
+    public int value;
 
     public Vertex(int key, int value) {
         this.key = key;

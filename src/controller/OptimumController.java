@@ -33,21 +33,24 @@ public class OptimumController {
 
     private Stage thisStage;//当前controller的Stage
     private SmartGraphPanel<Vertex, Edge> graphView;
-    private Graph<Vertex,Edge> g = MainController.g;
+    private Graph<Vertex,Edge> g;
 
-    private static int n = MainController.n; //边数
+    private static int n; //边数
     private static int firstDeleteEdge;//删除的边
     private static int[] res;   //合并顺序
-    private static Vertex[] vertices = MainController.vertices;//顶点
-    private static Edge[] edges = MainController.edges;//边
+    private static Vertex[] vertices;//顶点
+    private static Edge[] edges;//边
 
     //当前是第几步
-    private int step = 0;
-
+    private int step;
 
     //生成Stage时生成该Stage的Controller，Controller调用该方法把Stage传过来
     public void setStage(Stage stage) {
         thisStage = stage;
+        n = MainController.n;
+        vertices = MainController.vertices;
+        edges = MainController.edges;
+        g =MainController.g;
     }
 
     public void exitBtnClicked() {
@@ -73,10 +76,25 @@ public class OptimumController {
         }
         else {
             //删除这条边
-            g.removeEdge((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges(step).toArray()[res[step]-1]);
+            int de = res[step]; //删除第几条边
+            int leftv;//记下靠左顶点位置
+            if(de==1)leftv = n;
+            else leftv = de-1;
+
+            g.removeEdge((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges(step).toArray()[de-1]);
             //删除靠右的顶点
-            g.removeVertex((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices(step).toArray()[res[step]-1]);
+            g.removeVertex((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices(step).toArray()[de-1]);
             //修改左边顶点的值
+            //新建一个顶点，赋值
+            Vertex v;
+            if(edges[de].operation == "+"){
+                v = new Vertex(de-1,vertices[leftv].value+vertices[de].value);
+            }
+            else{
+                v = new Vertex(de-1,vertices[leftv].value*vertices[de].value);
+            }
+            //代替靠左的顶点
+            g.replace((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices(step).toArray()[leftv-1], v);
 
             graphView.update();
             step++;
@@ -84,6 +102,8 @@ public class OptimumController {
     }
 
     public void buildGraph() {
+        setStage(thisStage);
+
         step = 0;
 
         SmartPlacementStrategy strategy = new SmartCircularSortedPlacementStrategy();

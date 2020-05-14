@@ -33,6 +33,7 @@ public class MainController {
     static Edge[] edges;
     static Graph<Vertex, Edge> g;
 
+
     public static int level;
 
     public static int n = 5; //多边形边数
@@ -119,7 +120,7 @@ public class MainController {
 //
 //        g.insertEdge(vertices[vertices.length - 1], vertices[vertices.length - 2], new Edge(3, "*"));
 //
-//        graphView.update();
+          graphView.update();
 
         //动态加载窗口fxml界面
         Stage stage = new Stage();
@@ -144,6 +145,7 @@ public class MainController {
         stage.setScene(new Scene(root, 1024, 700));
         stage.show();
         controller.initGraph();
+
     }
 
 }
