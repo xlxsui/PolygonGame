@@ -386,9 +386,9 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
             throw new InvalidVertexException("Not a vertex.");
         }
 
-        if (!vertices.containsKey(vertex.element)) {
-            throw new InvalidVertexException("Vertex does not belong to this graph.");
-        }
+//        if (!vertices.containsKey(vertex.element)) {
+//            throw new InvalidVertexException("Vertex does not belong to this graph.");
+//        }
 
         return vertex;
     }
@@ -403,9 +403,9 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
             throw new InvalidVertexException("Not an adge.");
         }
 
-        if (!edges.containsKey(edge.element)) {
-            throw new InvalidEdgeException("Edge does not belong to this graph.");
-        }
+//        if (!edges.containsKey(edge.element)) {
+//            throw new InvalidEdgeException("Edge does not belong to this graph.");
+//        }
 
         return edge;
     }
