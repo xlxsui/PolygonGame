@@ -31,7 +31,7 @@ public class MainController {
     private SmartGraphPanel<Vertex, Edge> graphView;
     static Vertex[] vertices;
     static Edge[] edges;
-    static Graph<Vertex, Edge> g;
+    public static Graph<Vertex, Edge> g;
 
 
     public static int level;

@@ -35,11 +35,14 @@ public class OptimumController {
     private SmartGraphPanel<Vertex, Edge> graphView;
     private Graph<Vertex,Edge> g;
 
-    private static int n; //边数
+    private static int n = MainController.n; //边数
     private static int firstDeleteEdge;//删除的边
     private static int[] res;   //合并顺序
-    private static Vertex[] vertices;//顶点
-    private static Edge[] edges;//边
+    private static Vertex[] vertices = MainController.vertices;//顶点
+    private static Edge[] edges = MainController.edges;//边
+    static String[] op = MainController.op; //每条边的对应的操作（从1开始计数）
+    static int[] v = MainController.v; //每个顶点数值（从1开始计数）
+
 
     //当前是第几步
     private int step;
@@ -47,10 +50,31 @@ public class OptimumController {
     //生成Stage时生成该Stage的Controller，Controller调用该方法把Stage传过来
     public void setStage(Stage stage) {
         thisStage = stage;
-        n = MainController.n;
-        vertices = MainController.vertices;
-        edges = MainController.edges;
-        g =MainController.g;
+    }
+
+    private Graph<Vertex, Edge> build_flower_graph() {
+
+        g = new GraphEdgeList<>();
+
+        vertices = new Vertex[n + 1];
+        for (int i = 1; i <= n; i++) {
+            Vertex vertex = new Vertex(i, v[i]);
+            vertices[i] = vertex;
+            g.insertVertex(vertex);
+        }
+
+        edges = new Edge[n + 1];
+        for (int i = 1; i <= n; i++) {
+            Edge edge = new Edge(i, op[i]);
+            edges[i] = edge;
+        }
+
+        g.insertEdge(vertices[n], vertices[1], edges[1]);
+        for (int i = 1; i <= n - 1; i++) {
+            g.insertEdge(vertices[i], vertices[i + 1], edges[i + 1]);
+        }
+
+        return g;
     }
 
     public void exitBtnClicked() {
@@ -95,6 +119,9 @@ public class OptimumController {
             }
             //代替靠左的顶点
             g.replace((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices(step).toArray()[leftv-1], v);
+            /**
+             * 这里替代顶点，值并没有变化
+             */
 
             graphView.update();
             step++;
@@ -102,6 +129,7 @@ public class OptimumController {
     }
 
     public void buildGraph() {
+        g = build_flower_graph();
         setStage(thisStage);
 
         step = 0;
