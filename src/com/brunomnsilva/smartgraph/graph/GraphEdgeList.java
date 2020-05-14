@@ -77,8 +77,10 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
             }
             return vlist;
         }
-        else
+        else{
             return vlist;
+        }
+
     }
 
     @Override

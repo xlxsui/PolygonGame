@@ -118,7 +118,7 @@ public class OptimumController {
                 v = new Vertex(de-1,vertices[leftv].value*vertices[de].value);
             }
             //代替靠左的顶点
-            g.replace((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices(step).toArray()[leftv-1], v);
+            //g.replace((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices(step).toArray()[leftv-1], v);
             /**
              * 这里替代顶点，值并没有变化
              */
@@ -129,11 +129,11 @@ public class OptimumController {
     }
 
     public void buildGraph() {
-        g = build_flower_graph();
+
         setStage(thisStage);
 
         step = 0;
-
+        g = build_flower_graph();
         SmartPlacementStrategy strategy = new SmartCircularSortedPlacementStrategy();
         graphView = new SmartGraphPanel<>(g, strategy);
 
@@ -147,9 +147,6 @@ public class OptimumController {
         DP dp = new DP();
         res = dp.run();
         firstDeleteEdge = DP.deleteEdge;
-
-
-
     }
 
     public void initGraph() {
