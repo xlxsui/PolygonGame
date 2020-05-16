@@ -23,8 +23,6 @@
  */
 package com.brunomnsilva.smartgraph.graph;
 
-import controller.MainController;
-
 import java.util.*;
 
 /**
@@ -68,20 +66,20 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
         return edges.size();
     }
 
-    @Override
-    public Collection<Vertex<V>> vertices(int time) {
-        if(time==1){
-            vlist = new ArrayList<>();
-            for (Vertex<V> v : vertices.values()) {
-                vlist.add(new MyVertex(v.element()));
-            }
-            return vlist;
-        }
-        else{
-            return vlist;
-        }
-
-    }
+//    @Override
+//    public Collection<Vertex<V>> vertices(int time) {
+//        if(time==1){
+//            vlist = new ArrayList<>();
+//            for (Vertex<V> v : vertices.values()) {
+//                vlist.add(new MyVertex(v.element()));
+//            }
+//            return vlist;
+//        }
+//        else{
+//            return vlist;
+//        }
+//
+//    }
 
     @Override
     public Collection<Vertex<V>> vertices() {
@@ -92,22 +90,22 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
         return list;
     }
 
-    @Override
-    public Collection<Edge<E, V>> edges(int time) {
-        if(time==0){
-            elist = new ArrayList<>();
-            for (Edge<E, V> e : edges.values()) {
-                //elist.add(e);
-                elist.add(new MyEdge(e.element(),e.vertices()[0],e.vertices()[1]));
-
-            }
-            return elist;
-        }
-        else{
-            return elist;
-        }
-
-    }
+//    @Override
+//    public Collection<Edge<E, V>> edges(int time) {
+//        if(time==0){
+//            elist = new ArrayList<>();
+//            for (Edge<E, V> e : edges.values()) {
+//                //elist.add(e);
+//                elist.add(new MyEdge(e.element(),e.vertices()[0],e.vertices()[1]));
+//
+//            }
+//            return elist;
+//        }
+//        else{
+//            return elist;
+//        }
+//
+//    }
 
     @Override
     public Collection<Edge<E, V>> edges() {
@@ -185,9 +183,9 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
     public synchronized Edge<E, V> insertEdge(Vertex<V> u, Vertex<V> v, E edgeElement) 
             throws InvalidVertexException, InvalidEdgeException {
 
-        if (existsEdgeWith(edgeElement)) {
-            throw new InvalidEdgeException("There's already an edge with this element.");
-        }
+//        if (existsEdgeWith(edgeElement)) {
+//            throw new InvalidEdgeException("There's already an edge with this element.");
+//        }
 
         MyVertex outVertex = checkVertex(u);
         MyVertex inVertex = checkVertex(v);
@@ -204,9 +202,9 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
     public synchronized Edge<E, V> insertEdge(V vElement1, V vElement2, E edgeElement) 
             throws InvalidVertexException, InvalidEdgeException {
         
-        if (existsEdgeWith(edgeElement)) {
-            throw new InvalidEdgeException("There's already an edge with this element.");
-        }
+//        if (existsEdgeWith(edgeElement)) {
+//            throw new InvalidEdgeException("There's already an edge with this element.");
+//        }
 
         if (!existsVertexWith(vElement1)) {
             throw new InvalidVertexException("No vertex contains " + vElement1);
@@ -255,9 +253,9 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
 
     @Override
     public V replace(Vertex<V> v, V newElement) throws InvalidVertexException {
-        if (existsVertexWith(newElement)) {
-            throw new InvalidVertexException("There's already a vertex with this element.");
-        }
+//        if (existsVertexWith(newElement)) {
+//            throw new InvalidVertexException("There's already a vertex with this element.");
+//        }
 
         MyVertex vertex = checkVertex(v);
 
@@ -317,7 +315,7 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
 
     class MyVertex implements Vertex<V> {
 
-        V element;
+        public V element;
 
         public MyVertex(V element) {
             this.element = element;

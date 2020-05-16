@@ -1,7 +1,7 @@
 package entity;
 
 public class Edge {
-    int key;
+    public int key;
     public String operation;
 
     public Edge(int key, String operation) {

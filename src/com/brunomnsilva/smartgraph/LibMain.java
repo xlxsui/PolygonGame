@@ -263,7 +263,7 @@ public class LibMain extends Application {
         int rand = random.nextInt(size);
         Vertex<String> existing = null;
         int i = 0;
-        for (Vertex<String> v : g.vertices(0)) {
+        for (Vertex<String> v : g.vertices()) {
             existing = v;
             if (i++ == rand) {
                 break;

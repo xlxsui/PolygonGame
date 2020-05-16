@@ -1,7 +1,7 @@
 package entity;
 
 public class Vertex {
-    int key;
+    public int key;
     public int value;
 
     public Vertex(int key, int value) {

@@ -127,10 +127,10 @@ public class DigraphEdgeList<V, E> implements Digraph<V, E> {
     }
 
 
-    @Override
-    public Collection<Vertex<V>> vertices(int time) {
-        return null;
-    }
+//    @Override
+//    public Collection<Vertex<V>> vertices(int time) {
+//        return null;
+//    }
 
     @Override
     public synchronized Collection<Vertex<V>> vertices() {
@@ -141,10 +141,10 @@ public class DigraphEdgeList<V, E> implements Digraph<V, E> {
         return list;
     }
 
-    @Override
-    public Collection<Edge<E, V>> edges(int time) {
-        return null;
-    }
+//    @Override
+//    public Collection<Edge<E, V>> edges(int time) {
+//        return null;
+//    }
 
     @Override
     public synchronized Collection<Edge<E, V>> edges() {
