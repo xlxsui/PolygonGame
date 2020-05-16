@@ -36,7 +36,7 @@ public class MainController {
 
     public static int level;
 
-    public static int n = 5; //多边形边数
+    public static int n = 6; //多边形边数
     static String[] op; //每条边的对应的操作（从1开始计数）
     static int[] v; //每个顶点数值（从1开始计数）
 

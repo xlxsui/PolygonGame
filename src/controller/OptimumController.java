@@ -75,7 +75,6 @@ public class OptimumController {
             g.insertEdge(vertices[i], vertices[i + 1], edges[i + 1]);
         }
 
-
         return g;
     }
 
@@ -120,8 +119,6 @@ public class OptimumController {
                     res[i] += n-firstDeleteEdge;
             }
 
-
-
             step++;
             graphView.update();
         }
@@ -129,66 +126,65 @@ public class OptimumController {
             //删除这条边
             int de = res[step]; //删除第几条边
 
-
-                //修改左边顶点的值
-                //新建一个顶点，赋值
-                int v;
-                String s = ((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges().toArray()[de-1]).element().operation;
-                if(s.equals("+")){
-                    //v = vertices[leftv].value+vertices[de].value;
-                    v = ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de-1]).element().value
-                            + ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de]).element().value;
-                }
-                else{
-                    //v = vertices[leftv].value*vertices[de].value;
-                    v = ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de-1]).element().value
-                            * ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de]).element().value;
-                }
-                //代替靠左的顶点
-                ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de-1]).element().value = v;
-
-
-                //如果删除的是最后的一条边,那就直接删除吧
-                if(de == n-step){
-                    g.removeVertex((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[de]);
-                    graphView.update();
-
-                }
+            //修改左边顶点的值
+            //新建一个顶点，赋值
+            int v;
+            String s = ((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges().toArray()[de-1]).element().operation;
+            if(s.equals("+")){
+                //v = vertices[leftv].value+vertices[de].value;
+                v = ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de-1]).element().value
+                        + ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de]).element().value;
+            }
+            else{
+                //v = vertices[leftv].value*vertices[de].value;
+                v = ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de-1]).element().value
+                        * ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de]).element().value;
+            }
+            //代替靠左的顶点
+            ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de-1]).element().value = v;
 
 
-                else{
-                    //修改下一条边
+            //如果删除的是最后的一条边,那就直接删除吧
+            if(de == n-step){
+                g.removeVertex((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[de]);
+                graphView.update();
+            }
 
-                    g.cleanE();
-                    for(int i=1;i<de;i++)
-                        g.insertEdge(((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[i-1]).element(),
-                                ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[i]).element(),
-                                ((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) gr.edges().toArray()[i-1]).element());
+            else{
+                //修改下一条边
+                Edge[] vs = new Edge[n-step];
+                for(int i=0;i<n-step;i++)
+                    vs[i] = ((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges().toArray()[i]).element();
+
+                g.cleanE();
+                for(int i=1;i<de;i++)
+                    g.insertEdge(((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[i-1]).element(),
+                            ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[i]).element(),
+                            vs[i-1]);
 
 
-                    g.insertEdge(((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de-1]).element(),
-                            ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de+1]).element(),
-                            ((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) gr.edges().toArray()[de]).element());
+                g.insertEdge(((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de-1]).element(),
+                        ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de+1]).element(),
+                        vs[de]);
 
-                    for(int i=de+2;i<=n-step;i++)
-                        g.insertEdge(((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[i-1]).element(),
-                                ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[i]).element(),
-                                ((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) gr.edges().toArray()[i-1]).element());
+                for(int i=de+2;i<=n-step;i++)
+                    g.insertEdge(((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[i-1]).element(),
+                            ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[i]).element(),
+                            vs[i-1]);
 
 
-                    //删除这条边
-                    //g.removeEdge((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges().toArray()[de-1]);
+                //删除这条边
+                //g.removeEdge((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges().toArray()[de-1]);
 
-                    //删除顶点
-                    g.removeVertex((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[de]);
+                //删除顶点
+                g.removeVertex((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[de]);
 
-                    //更新res
-                    for(int i=step+1;i<=n-1;i++)
-                        if(res[i]>de)res[i] -= 1;
-                    step++;
+                //更新res
+                for(int i=step+1;i<=n-1;i++)
+                    if(res[i]>de)res[i] -= 1;
 
-                    graphView.update();
-                }
+                graphView.update();
+            }
             graphView.update();
             step++;
         }

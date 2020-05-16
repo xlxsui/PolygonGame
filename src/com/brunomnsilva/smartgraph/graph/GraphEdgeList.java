@@ -56,6 +56,7 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
     }
 
 
+
     @Override
     public int numVertices() {
         return vertices.size();
