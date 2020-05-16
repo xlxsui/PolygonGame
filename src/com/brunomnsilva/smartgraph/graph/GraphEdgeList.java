@@ -40,8 +40,8 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
 
     /* inner classes are defined at the end of the class, so are the auxiliary methods 
      */
-    private Map<V, Vertex<V>> vertices;
-    private Map<E, Edge<E, V>> edges;
+    public Map<V, Vertex<V>> vertices;
+    public Map<E, Edge<E, V>> edges;
 
     private List<Vertex<V>> vlist;
     private List<Edge<E, V>> elist;
@@ -277,6 +277,17 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
         edge.element = newElement;
 
         return oldElement;
+    }
+
+    @Override
+    public void cleanE() {
+        edges.clear();
+
+    }
+
+    @Override
+    public void cleanV() {
+        vertices.clear();
     }
 
     private MyVertex vertexOf(V vElement) {

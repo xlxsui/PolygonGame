@@ -55,6 +55,7 @@ public interface Edge<E, V> {
      * @return      an array of length 2, containing the vertices at both ends.
      */
     public Vertex<V>[] vertices();
+
     
     
 }

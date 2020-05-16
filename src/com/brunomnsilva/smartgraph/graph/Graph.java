@@ -24,6 +24,7 @@
 package com.brunomnsilva.smartgraph.graph;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * A graph is made up of a set of vertices connected by edges, where the edges 
@@ -42,7 +43,10 @@ public interface Graph<V, E> {
      * 
      * @return      total number of vertices
      */
+
+
     public int numVertices();
+
 
     /**
      * Returns the total number of edges of the graph.
@@ -242,4 +246,8 @@ public interface Graph<V, E> {
      *                                      method.
      */
     public E replace(Edge<E, V> e, E newElement) throws InvalidEdgeException;
+
+    public void cleanE();
+
+    public void cleanV();
 }

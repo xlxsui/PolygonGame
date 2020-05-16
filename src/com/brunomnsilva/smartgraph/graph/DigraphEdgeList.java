@@ -242,6 +242,16 @@ public class DigraphEdgeList<V, E> implements Digraph<V, E> {
         return oldElement;
     }
 
+    @Override
+    public void cleanE() {
+
+    }
+
+    @Override
+    public void cleanV() {
+
+    }
+
     private MyVertex vertexOf(V vElement) {
         for (Vertex<V> v : vertices.values()) {
             if (v.element().equals(vElement)) {
