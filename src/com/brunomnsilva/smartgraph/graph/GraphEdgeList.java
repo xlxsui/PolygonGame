@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2019 brunomnsilva@gmail.com.
@@ -23,6 +23,7 @@
  */
 package com.brunomnsilva.smartgraph.graph;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -33,12 +34,11 @@ import java.util.*;
  *
  * @param <V> Type of element stored at a vertex
  * @param <E> Type of element stored at an edge
- * 
  * @author brunomnsilva
  */
-public class GraphEdgeList<V, E> implements Graph<V, E> {
+public class GraphEdgeList<V, E> implements Graph<V, E>, Serializable {
 
-    /* inner classes are defined at the end of the class, so are the auxiliary methods 
+    /* inner classes are defined at the end of the class, so are the auxiliary methods
      */
     public Map<V, Vertex<V>> vertices;
     public Map<E, Edge<E, V>> edges;
@@ -54,7 +54,6 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
         this.vertices = new LinkedHashMap<>();
         this.edges = new LinkedHashMap<>();
     }
-
 
 
     @Override
@@ -110,7 +109,7 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
 
     @Override
     public Collection<Edge<E, V>> edges() {
-        ArrayList<Edge<E,V>> list = new ArrayList<>();
+        ArrayList<Edge<E, V>> list = new ArrayList<>();
         for (Edge<E, V> e : edges.values()) {
             list.add(e);
         }
@@ -181,7 +180,7 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
     }
 
     @Override
-    public synchronized Edge<E, V> insertEdge(Vertex<V> u, Vertex<V> v, E edgeElement) 
+    public synchronized Edge<E, V> insertEdge(Vertex<V> u, Vertex<V> v, E edgeElement)
             throws InvalidVertexException, InvalidEdgeException {
 
 //        if (existsEdgeWith(edgeElement)) {
@@ -200,9 +199,9 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
     }
 
     @Override
-    public synchronized Edge<E, V> insertEdge(V vElement1, V vElement2, E edgeElement) 
+    public synchronized Edge<E, V> insertEdge(V vElement1, V vElement2, E edgeElement)
             throws InvalidVertexException, InvalidEdgeException {
-        
+
 //        if (existsEdgeWith(edgeElement)) {
 //            throw new InvalidEdgeException("There's already an edge with this element.");
 //        }
@@ -325,7 +324,7 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
         return sb.toString();
     }
 
-    class MyVertex implements Vertex<V> {
+    class MyVertex implements Vertex<V>, Serializable {
 
         public V element;
 
@@ -344,7 +343,7 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
         }
     }
 
-    class MyEdge implements Edge<E, V> {
+    class MyEdge implements Edge<E, V>, Serializable {
 
         E element;
         Vertex<V> vertexOutbound;
@@ -389,8 +388,8 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
      * @throws InvalidVertexException
      */
     private MyVertex checkVertex(Vertex<V> v) throws InvalidVertexException {
-        if(v == null) throw new InvalidVertexException("Null vertex.");
-        
+        if (v == null) throw new InvalidVertexException("Null vertex.");
+
         MyVertex vertex;
         try {
             vertex = (MyVertex) v;
@@ -406,8 +405,8 @@ public class GraphEdgeList<V, E> implements Graph<V, E> {
     }
 
     private MyEdge checkEdge(Edge<E, V> e) throws InvalidEdgeException {
-        if(e == null) throw new InvalidEdgeException("Null edge.");
-        
+        if (e == null) throw new InvalidEdgeException("Null edge.");
+
         MyEdge edge;
         try {
             edge = (MyEdge) e;

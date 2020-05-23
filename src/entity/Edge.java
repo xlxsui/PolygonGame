@@ -1,6 +1,8 @@
 package entity;
 
-public class Edge {
+import java.io.Serializable;
+
+public class Edge implements Serializable {
     public int key;
     public String operation;
 

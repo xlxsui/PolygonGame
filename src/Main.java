@@ -13,7 +13,7 @@ import java.net.URL;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage stage) throws Exception {
         //动态加载窗口fxml界面
         //getResource是定位到当前类目录，..jar返回不了，注意大小写。/开头定位到根目录，相当于src
         URL location = getClass().getResource("/fxml/main.fxml");
@@ -25,20 +25,19 @@ public class Main extends Application {
 
         //获取界面的Controller的实例对象
         MainController controller = fxmlLoader.getController();
-        controller.setStage(primaryStage);//让控制器获取到Stage
+        controller.setStage(stage);//让控制器获取到Stage
         controller.buildGraph();
 
-
         //set Icon
-        primaryStage.initStyle(StageStyle.DECORATED);
-        primaryStage.getIcons().add(new Image(getClass().getResource("/resources/icon.png").toExternalForm()));
-        primaryStage.setTitle("多边形游戏");
-        primaryStage.setScene(new Scene(root, 1024, 700));
-        primaryStage.setMinHeight(768);
-        primaryStage.setMaxHeight(768);
-        primaryStage.setMinWidth(1024);
-        primaryStage.setMaxWidth(1024);
-        primaryStage.show();
+        stage.initStyle(StageStyle.DECORATED);
+        stage.getIcons().add(new Image(getClass().getResource("/resources/icon.png").toExternalForm()));
+        stage.setTitle("多边形游戏");
+        stage.setScene(new Scene(root, 1024, 700));
+        stage.setMinHeight(768);
+        stage.setMaxHeight(768);
+        stage.setMinWidth(1024);
+        stage.setMaxWidth(1024);
+        stage.show();
         controller.initGraph();
 
     }

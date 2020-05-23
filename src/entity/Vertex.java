@@ -1,6 +1,8 @@
 package entity;
 
-public class Vertex {
+import java.io.Serializable;
+
+public class Vertex implements Serializable {
     public int key;
     public int value;
 
