@@ -60,6 +60,15 @@ public class MainController {
     public void onOptimumBtnClicked() throws IOException {
         graphView.update();
 
+        OptimumController.vertices = new Vertex[vertices.length];
+        System.arraycopy(vertices, 0, OptimumController.vertices, 0, vertices.length);
+        OptimumController.edges = new Edge[edges.length];
+        System.arraycopy(edges, 0, OptimumController.edges, 0, edges.length);
+        OptimumController.n = n;
+        OptimumController.op = op;
+        OptimumController.v = v;
+
+
         //动态加载窗口fxml界面
         Stage stage = new Stage();
         //getResource是定位到当前类目录，..jar返回不了，注意大小写。/开头定位到根目录，相当于src

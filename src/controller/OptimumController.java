@@ -32,15 +32,15 @@ public class OptimumController {
     SmartPlacementStrategy strategy;
     private Stage thisStage;//当前controller的Stage
     private SmartGraphPanel<Vertex, Edge> graphView;
-    private Graph<Vertex,Edge> g;
-    private Graph<Vertex,Edge> gr;
+    private Graph<Vertex, Edge> g;
+    private Graph<Vertex, Edge> gr;
 
-    private static int n = MainController.n; //边数
+    public static int n; //边数
     private static int firstDeleteEdge;//删除的边
     private static int[] res;   //合并顺序
-    private static Vertex[] vertices = MainController.vertices;//顶点
-    private static Edge[] edges = MainController.edges;//边
-    static String[] op = MainController.op; //每条边的对应的操作（从1开始计数）
+    public static Vertex[] vertices;//顶点
+    public static Edge[] edges;//边
+    static String[] op ; //每条边的对应的操作（从1开始计数）
     static int[] v = MainController.v; //每个顶点数值（从1开始计数）
     private boolean[] flag;   //是插入的还
 
@@ -57,14 +57,14 @@ public class OptimumController {
 
         g = new GraphEdgeList<>();
 
-        vertices = new Vertex[n + 1];
+//        vertices = new Vertex[n + 1];
         for (int i = 1; i <= n; i++) {
             Vertex vertex = new Vertex(i, v[i]);
             vertices[i] = vertex;
             g.insertVertex(vertex);
         }
 
-        edges = new Edge[n + 1];
+//        edges = new Edge[n + 1];
         for (int i = 1; i <= n; i++) {
             Edge edge = new Edge(i, op[i]);
             edges[i] = edge;
@@ -83,15 +83,15 @@ public class OptimumController {
     }
 
     @FXML
-    void lastClicked(){  //点击上一步
-        if(step == 0)return;
+    void lastClicked() {  //点击上一步
+        if (step == 0) return;
 
     }
 
     @FXML
     void nextClicked() throws InterruptedException {
-        if(step == n)return;
-        if(step == 0){  //第一步，删除这条边
+        if (step == n) return;
+        if (step == 0) {  //第一步，删除这条边
             graphView.getStylableEdge(edges[firstDeleteEdge]).setStyle("-fx-stroke: #FF6D66;");
             graphView.update();
             //TimeUnit.SECONDS.sleep(1);//秒
@@ -100,28 +100,28 @@ public class OptimumController {
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
-                    g.removeEdge((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges().toArray()[firstDeleteEdge-1]);
+                    g.removeEdge((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges().toArray()[firstDeleteEdge - 1]);
 
                     g.cleanE();
                     g.cleanV();
 
                     //gr = new GraphEdgeList<>();
-                    for(int i=firstDeleteEdge; i<=n; i++)
+                    for (int i = firstDeleteEdge; i <= n; i++)
                         g.insertVertex(vertices[i]);
-                    for(int i=1; i<firstDeleteEdge; i++)
+                    for (int i = 1; i < firstDeleteEdge; i++)
                         g.insertVertex(vertices[i]);
-                    for(int i=firstDeleteEdge; i<n; i++)
-                        g.insertEdge(vertices[i],vertices[i+1],edges[i+1]);
-                    if(firstDeleteEdge != 1)
-                        g.insertEdge(vertices[n],vertices[1],edges[1]);
-                    for(int i=1;i<firstDeleteEdge-1;i++)
-                        g.insertEdge(vertices[i],vertices[i+1],edges[i+1]);
+                    for (int i = firstDeleteEdge; i < n; i++)
+                        g.insertEdge(vertices[i], vertices[i + 1], edges[i + 1]);
+                    if (firstDeleteEdge != 1)
+                        g.insertEdge(vertices[n], vertices[1], edges[1]);
+                    for (int i = 1; i < firstDeleteEdge - 1; i++)
+                        g.insertEdge(vertices[i], vertices[i + 1], edges[i + 1]);
 
 
-                    for(int i=1;i<n;i++){
-                        if(res[i]>firstDeleteEdge)res[i] -= firstDeleteEdge;
+                    for (int i = 1; i < n; i++) {
+                        if (res[i] > firstDeleteEdge) res[i] -= firstDeleteEdge;
                         else
-                            res[i] += n-firstDeleteEdge;
+                            res[i] += n - firstDeleteEdge;
                     }
 
                     step++;
@@ -129,12 +129,11 @@ public class OptimumController {
                 }
             };
             timer.schedule(task, 1000);
-        }
-        else {
+        } else {
             //删除这条边
             int de = res[step]; //删除第几条边
 
-            graphView.getStylableEdge((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges().toArray()[de-1]).setStyle("-fx-stroke: #FF6D66;");
+            graphView.getStylableEdge((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges().toArray()[de - 1]).setStyle("-fx-stroke: #FF6D66;");
             graphView.update();
 
             Timer timer = new Timer();
@@ -144,53 +143,50 @@ public class OptimumController {
                     //修改左边顶点的值
                     //新建一个顶点，赋值
                     int v;
-                    String s = ((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges().toArray()[de-1]).element().operation;
-                    if(s.equals("+")){
-                        v = ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de-1]).element().value
-                                + ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de]).element().value;
-                    }
-                    else{
-                        v = ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de-1]).element().value
-                                * ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de]).element().value;
+                    String s = ((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges().toArray()[de - 1]).element().operation;
+                    if (s.equals("+")) {
+                        v = ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[de - 1]).element().value
+                                + ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[de]).element().value;
+                    } else {
+                        v = ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[de - 1]).element().value
+                                * ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[de]).element().value;
                     }
                     //代替靠左的顶点
-                    ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de-1]).element().value = v;
+                    ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[de - 1]).element().value = v;
 
 
                     //如果删除的是最后的一条边,那就直接删除吧
-                    if(de == n-step){
+                    if (de == n - step) {
                         g.removeVertex((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[de]);
                         graphView.update();
-                    }
-
-                    else{
+                    } else {
                         //修改下一条边
-                        Edge[] vs = new Edge[n-step];
-                        for(int i=0;i<n-step;i++)
+                        Edge[] vs = new Edge[n - step];
+                        for (int i = 0; i < n - step; i++)
                             vs[i] = ((com.brunomnsilva.smartgraph.graph.Edge<Edge, Vertex>) g.edges().toArray()[i]).element();
 
                         g.cleanE();
-                        for(int i=1;i<de;i++)
-                            g.insertEdge(((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[i-1]).element(),
-                                    ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[i]).element(),
-                                    vs[i-1]);
+                        for (int i = 1; i < de; i++)
+                            g.insertEdge(((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[i - 1]).element(),
+                                    ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[i]).element(),
+                                    vs[i - 1]);
 
 
-                        g.insertEdge(((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de-1]).element(),
-                                ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[de+1]).element(),
+                        g.insertEdge(((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[de - 1]).element(),
+                                ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[de + 1]).element(),
                                 vs[de]);
 
-                        for(int i=de+2;i<=n-step;i++)
-                            g.insertEdge(((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[i-1]).element(),
-                                    ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>)g.vertices().toArray()[i]).element(),
-                                    vs[i-1]);
+                        for (int i = de + 2; i <= n - step; i++)
+                            g.insertEdge(((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[i - 1]).element(),
+                                    ((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[i]).element(),
+                                    vs[i - 1]);
 
                         //删除顶点
                         g.removeVertex((com.brunomnsilva.smartgraph.graph.Vertex<Vertex>) g.vertices().toArray()[de]);
 
                         //更新res
-                        for(int i=step+1;i<=n-1;i++)
-                            if(res[i]>de)res[i] -= 1;
+                        for (int i = step + 1; i <= n - 1; i++)
+                            if (res[i] > de) res[i] -= 1;
 
                         graphView.update();
                     }

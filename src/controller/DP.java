@@ -5,9 +5,9 @@ import com.brunomnsilva.smartgraph.graph.DigraphEdgeList;
 import java.util.Stack;
 
 public class DP {
-    static int n = MainController.n; //多边形边数
-    static String[] op = MainController.op; //每条边的对应的操作（从1开始计数）
-    static int[] v = MainController.v; //每个顶点数值（从1开始计数）
+    static int n; //多边形边数
+    static String[] op; //每条边的对应的操作（从1开始计数）
+    static int[] v; //每个顶点数值（从1开始计数）
     private static int[][][] m; //m[i][n][1]：第三个维度为0是最小值，为1是最大值
     private static int[][][] cut; //记录合并点的数组，即某条链断开的边的位置，同m用法
     private Stack<Integer> s; //用栈保存合并边的顺序
@@ -26,6 +26,10 @@ public class DP {
         //        this.m = m;
         this.cut = new int[n + 1][n + 1][2];
         this.s = new Stack<>();
+
+        n = OptimumController.n;
+        op = OptimumController.op;
+        v = OptimumController.v;
 
         DigraphEdgeList digraphEdgeList = new DigraphEdgeList();
     }
