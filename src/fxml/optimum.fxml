@@ -22,9 +22,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button mnemonicParsing="false" text="上一步" GridPane.rowIndex="0" onMouseClicked="#lastClicked"/>
-                <Button mnemonicParsing="false" text="下一步" GridPane.rowIndex="1" onMouseClicked="#nextClicked"/>
-                <Button mnemonicParsing="false" text="退出" GridPane.rowIndex="2" onMouseClicked="#exitBtnClicked"/>
+                <Button mnemonicParsing="false" text="下一步" GridPane.rowIndex="0" onMouseClicked="#nextClicked"/>
+                <Button mnemonicParsing="false" text="退出" GridPane.rowIndex="1" onMouseClicked="#exitBtnClicked"/>
             </children>
         </GridPane>
     </children>

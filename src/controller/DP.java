@@ -167,30 +167,11 @@ public class DP {
         }
     }
 
-    void showPolygon() {
-        StringBuilder midBuilder = new StringBuilder();
-        StringBuilder botBuilder = new StringBuilder();
-        for (int i = 1; i < v.length - 1; i++) {
-            midBuilder.append("|").append(String.valueOf(v[i])).append("|");
-            midBuilder.append("--").append(op[i + 1]).append("--");
-        }
-        midBuilder.append("|").append(String.valueOf(v[v.length - 1])).append("|");
-        botBuilder.append(" ");
-        for (int i = 1; i < midBuilder.length() - 1; i++) {
-            if (i == 1 || i == midBuilder.length() - 2) botBuilder.append("|");
-            else if (i == (midBuilder.length() - 1) / 2) botBuilder.append(op[1]);
-            else botBuilder.append("_");
-        }
-        System.out.println(midBuilder.toString());
-        System.out.println(botBuilder.toString());
-    }
-
     public static int[] run() {
         //初始化
         m = new int[n + 1][n + 1][2];
         res = new int[n];
         DP poly = new DP();
-        poly.showPolygon();
         for (int i = 1; i <= n; i++) {
             //默认只有顶点本身的值
             m[i][1][0] = m[i][1][1] = v[i];

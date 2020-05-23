@@ -229,6 +229,7 @@ public class OptimumController {
 
     public void initGraph() {
         graphView.init();
+        graphView.setAutomaticLayout(true);
     }
 }
 
