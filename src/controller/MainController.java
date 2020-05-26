@@ -176,7 +176,7 @@ public class MainController {
             tmp.insertEdge(vertices[i], vertices[i + 1], edges[i + 1]);
         }
 
-
+        step = 0;
         g.cleanE();
         g.cleanV();
         g.edges = tmp.edges;

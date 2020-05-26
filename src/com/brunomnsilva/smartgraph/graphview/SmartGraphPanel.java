@@ -962,13 +962,29 @@ public class SmartGraphPanel<V, E> extends Pane {
     private void enableDoubleClickListener() {
         setOnMouseClicked((MouseEvent mouseEvent) -> {
             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                if (mouseEvent.getClickCount() == 2) {
+                if (mouseEvent.getClickCount() == 1) {
                     //no need to continue otherwise
                     if (vertexClickConsumer == null && edgeClickConsumer == null) {
                         return;
                     }
 
-                    Node node = pick(SmartGraphPanel.this, mouseEvent.getSceneX(), mouseEvent.getSceneY());
+//                    Node node = pick(SmartGraphPanel.this, mouseEvent.getSceneX(), mouseEvent.getSceneY());
+                    Node node = null;
+                    int x = (int) mouseEvent.getSceneX();
+                    int y = (int) mouseEvent.getSceneY();
+                    // 周围都找一下
+                    for (int i = x - 5; i <= x + 5; i++) {
+                        for (int j = y - 5; j <= y + 5; j++) {
+                            node = pick(SmartGraphPanel.this, i, j);
+                            if (node instanceof SmartGraphEdge) {
+                                break;
+                            }
+                        }
+                        if (node instanceof SmartGraphEdge) {
+                            break;
+                        }
+                    }
+
                     if (node == null) {
                         return;
                     }
